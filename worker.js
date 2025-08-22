@@ -1,17 +1,127 @@
 addEventListener('fetch', event => {
     event.respondWith(handleRequest(event.request))
 })
-  
+
 async function handleRequest(request) {
-    return new Response(html, {
-      headers: { 
-        'content-type': 'text/html; charset=utf-8',
-        'cache-control': 'public, max-age=3600'
-      }
+    return new Response(getHTML(), {
+        headers: { 
+            'content-type': 'text/html; charset=utf-8',
+            'cache-control': 'public, max-age=3600'
+        }
     })
 }
-  
-const html = `<!DOCTYPE html>
+
+// 分类、链接名称和链接数据 - 放在顶部方便编辑
+const categoriesData = [
+    {
+        "id": "common",
+        "title": "常用网站",
+        "icon": "fas fa-star",
+        "links": [
+            {"name": "GitHub", "url": "https://github.com", "description": "全球最大的代码托管平台"},
+            {"name": "Cloudflare", "url": "https://dash.cloudflare.com", "description": "网络云平台"},
+            {"name": "52论坛", "url": "https://52.pojie.com", "description": "网络技术交流来论坛"},
+            {"name": "哔哩哔哩", "url": "https://bilibili.com", "description": "中国年轻人文化社区"},
+            {"name": "YouTube", "url": "https://youtube.com", "description": "全球最大的视频分享平台"}
+        ]
+    },
+    {
+        "id": "ai",
+        "title": "AI",
+        "icon": "fas fa-robot",
+        "links": [
+            {"name": "Gemini", "url": "https://gemini.google.com/", "description": "Google推出的AI助手"},
+            {"name": "元宝", "url": "https://yuanbao.tencent.com/", "description": "腾讯推出的AI助手"},
+            {"name": "豆包", "url": "https://www.doubao.com/", "description": "字节跳动推出的AI助手"},
+			{"name": "扣子CN", "url": "https://space.coze.cn/", "description": "字节跳动推出的适合企业和团队的复杂工作流。"},
+			{"name": "扣子EN", "url": "https://www.coze.com/", "description": "字节跳动推出的适合企业和团队的复杂工作流。"},
+            {"name": "ima知识库", "url": "https://ima.qq.com/", "description": "智能知识管理与问答平台"}
+        ]
+    },
+    {
+        "id": "ipo",
+        "title": "IPO与投融资",
+        "icon": "fas fa-chart-line",
+        "links": [
+            {"name": "深交所", "url": "http://listing.szse.cn/projectdynamic/ipo/index.html", "description": "深交所项目动态"},
+            {"name": "上交所", "url": "https://www.sse.com.cn/listing/renewal/ipo/", "description": "上交所项目动态"},
+            {"name": "北交所", "url": "https://www.bse.cn/audit/project_news.html", "description": "北交所项目动态"},
+            {"name": "港交所", "url": "https://sc.hkexnews.hk/TuniS/www.hkexnews.hk/index_c.htm", "description": "香港IPO项目动态-披露易"},
+            {"name": "美国证监会", "url": "https://www.sec.gov/search-filings", "description": "美国证监会IPO审核动态"},
+			{"name": "iposcoop", "url": "https://www.iposcoop.com/ipo-calendar/", "description": "第三方美股IPO动态"},
+			{"name": "产业通", "url": "https://chanyeos.com/smart-ke-b/#/home/homeSearch", "description": "各领域企业、园区信息聚合"},
+			{"name": "36氪创投", "url": "https://pitchhub.36kr.com/", "description": "融资新闻,创业项目,投资人动态,企业资讯,融资快报,项目信息"},
+			{"name": "未来智库", "url": "https://www.vzkoo.com/", "description": "各领域行研报告"},
+			{"name": "中财数据", "url": "https://data.cfi.cn/cfidata.aspx", "description": "二级市场数据"},
+			{"name": "同花顺数据", "url": "https://data.10jqka.com.cn/###", "description": "龙虎榜、业绩预告、资金流向、大宗交易等"}
+        ]
+    },
+    {
+        "id": "legal",
+        "title": "法律",
+        "icon": "fas fa-gavel",
+        "links": [
+            {"name": "证期法规", "url": "http://www.csrc.gov.cn/pub/newsite/flb/flfg/", "description": "证监会法律法规数据库"},
+            {"name": "裁判文书网", "url": "https://wenshu.court.gov.cn/", "description": "中国裁判文书公开平台"},
+            {"name": "执行信息网", "url": "https://zxgk.court.gov.cn/", "description": "全国法院被执行人信息查询"},
+            {"name": "诉讼资产网", "url": "https://www.rmfysszc.gov.cn/", "description": "人民法院诉讼资产网"},
+            {"name": "阿里拍卖", "url": "https://sf.taobao.com/", "description": "司法拍卖平台"},
+            {"name": "openlaw", "url": "https://openlaw.cn/", "description": "法律案例检索平台"}
+        ]
+    },
+    {
+        "id": "certification",
+        "title": "资质认定",
+        "icon": "fas fa-certificate",
+        "links": [
+            {"name": "高新企业", "url": "http://www.innocom.gov.cn/", "description": "高新技术企业认定管理工作网"}
+        ]
+    },
+    {
+        "id": "credit",
+        "title": "公示查询",
+        "icon": "fas fa-credit-card",
+        "links": [
+			{"name": "信用江苏", "url": "https://credit.jiangsu.gov.cn/credit/xyfw/index.jhtml", "description": "江苏省企业信用查询"},
+			{"name": "信用上海", "url": "https://credit.fgw.sh.gov.cn/index.html", "description": "上海市企业信用查询"},
+            {"name": "征信中心", "url": "https://ipcrs.pbccrc.org.cn/", "description": "中国人民银行征信中心"},
+            {"name": "学信网", "url": "https://www.chsi.com.cn/", "description": "中国高等教育学生信息网"},
+            {"name": "合规证明", "url": "https://ydzt.jszwfw.gov.cn/qyxxhcxtweb/#/", "description": "江苏省企业合规证明办理（含线上线下）"},			
+            {"name": "证券失信查询", "url": "http://neris.csrc.gov.cn/shixinchaxun/", "description": "证券期货市场失信记录查询平台"},
+            {"name": "私募基金公示", "url": "https://gs.amac.org.cn/amac-infodisc/res/pof/fund/index.html", "description": "中国证券投资投资基金业协会-私募基金公示"},
+            {"name": "私募管理人", "url": "https://gs.amac.org.cn/amac-infodisc/res/pof/manager/managerList.html", "description": "中国证券投资投资基金业协会-私募基金管理人公示"}
+        ]
+    },
+    {
+        "id": "government",
+        "title": "政务中心",
+        "icon": "fas fa-landmark",
+        "links": [
+            {"name": "苏州政务", "url": "https://sz.jszwfw.gov.cn/", "description": "苏州市政务服务中心"},
+            {"name": "园区政务", "url": "https://szgyy.jszwfw.gov.cn/", "description": "苏州工业园区管委会政务服务中心"},
+            {"name": "园区企服", "url": "https://sme.sipac.gov.cn/epheadline/home", "description": "苏州工业园区企业服务中心"},
+			{"name": "12333", "url": "https://si.12333.gov.cn/index.jhtml", "description": "国家社保服务-养老、失业、工伤保险"},
+			{"name": "江苏医保云", "url": "https://ybj.jszwfw.gov.cn/hsa-local/web/hallEnter/#/Index", "description": "江苏省医疗保障局网上服务大厅"},
+			{"name": "江苏人社", "url": "https://rs.jshrss.jiangsu.gov.cn/index/", "description": "江苏省人社厅网上服务大厅-个人、企业"}
+        ]
+    },
+    {
+        "id": "tech",
+        "title": "IT技术",
+        "icon": "fas fa-code",
+        "links": [
+            {"name": "Github", "url": "https://github.com/", "description": "全球最大的代码托管平台"},
+            {"name": "cloudflare", "url": "https://www.cloudflare.com/", "description": "全球领先的CDN和安全服务提供商"},
+            {"name": "腾讯云", "url": "https://cloud.tencent.com/", "description": "腾讯云计算服务平台"},
+            {"name": "阿里云", "url": "https://www.aliyun.com/", "description": "阿里巴巴云计算服务平台"},
+            {"name": "七牛", "url": "https://www.qiniu.com/", "description": "七牛云存储服务"},
+            {"name": "又拍云", "url": "https://www.upyun.com/", "description": "又拍云存储服务"}
+        ]
+    }
+];
+
+function getHTML() {
+    return `<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -279,6 +389,7 @@ const html = `<!DOCTYPE html>
             text-align: center;
             font-size: 14px;
             font-weight: 500;
+            position: relative;
         }
         
         body.flat-theme .link-item {
@@ -297,6 +408,43 @@ const html = `<!DOCTYPE html>
             background: #edf2f7;
             transform: translateY(-2px);
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+        }
+        
+        /* 链接描述工具提示样式 */
+        .link-item .tooltip {
+            visibility: hidden;
+            width: 200px;
+            background-color: #333;
+            color: white;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 12px;
+            font-weight: normal;
+            pointer-events: none;
+        }
+        
+        .link-item .tooltip::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #333 transparent transparent transparent;
+        }
+        
+        .link-item:hover .tooltip {
+            visibility: visible;
+            opacity: 1;
         }
         
         footer {
@@ -454,78 +602,8 @@ const html = `<!DOCTYPE html>
             </div>
         </div>
         
-        <div class="categories-container">
-            <!-- 常用网站 -->
-            <div class="category-row">
-                <div class="category-header">
-                    <div class="category-icon">
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <h2 class="category-title">常用网站</h2>
-                </div>
-                <div class="links-container">
-                    <a href="https://github.com" target="_blank" class="link-item" rel="nofollow">GitHub</a>
-                    <a href="https://gitee.com" target="_blank" class="link-item" rel="nofollow">Gitee</a>
-                    <a href="https://stackoverflow.com" target="_blank" class="link-item" rel="nofollow">Stack Overflow</a>
-                    <a href="https://zhihu.com" target="_blank" class="link-item" rel="nofollow">知乎</a>
-                    <a href="https://bilibili.com" target="_blank" class="link-item" rel="nofollow">哔哩哔哩</a>
-                    <a href="https://youtube.com" target="_blank" class="link-item" rel="nofollow">YouTube</a>
-                </div>
-            </div>
-            
-            <!-- 交易所 -->
-            <div class="category-row">
-                <div class="category-header">
-                    <div class="category-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <h2 class="category-title">交易所</h2>
-                </div>
-                <div class="links-container">
-                    <a href="https://binance.com" target="_blank" class="link-item" rel="nofollow">币安</a>
-                    <a href="https://coinbase.com" target="_blank" class="link-item" rel="nofollow">Coinbase</a>
-                    <a href="https://okx.com" target="_blank" class="link-item" rel="nofollow">OKX</a>
-                    <a href="https://huobi.com" target="_blank" class="link-item" rel="nofollow">火币</a>
-                    <a href="https://kraken.com" target="_blank" class="link-item" rel="nofollow">Kraken</a>
-                    <a href="https://bybit.com" target="_blank" class="link-item" rel="nofollow">Bybit</a>
-                </div>
-            </div>
-            
-            <!-- AI -->
-            <div class="category-row">
-                <div class="category-header">
-                    <div class="category-icon">
-                        <i class="fas fa-robot"></i>
-                    </div>
-                    <h2 class="category-title">AI工具</h2>
-                </div>
-                <div class="links-container">
-                    <a href="https://openai.com" target="_blank" class="link-item" rel="nofollow">OpenAI</a>
-                    <a href="https://deepmind.com" target="_blank" class="link-item" rel="nofollow">DeepMind</a>
-                    <a href="https://huggingface.co" target="_blank" class="link-item" rel="nofollow">Hugging Face</a>
-                    <a href="https://www.midjourney.com" target="_blank" class="link-item" rel="nofollow">Midjourney</a>
-                    <a href="https://stability.ai" target="_blank" class="link-item" rel="nofollow">Stable Diffusion</a>
-                    <a href="https://www.anthropic.com" target="_blank" class="link-item" rel="nofollow">Claude</a>
-                </div>
-            </div>
-            
-            <!-- 新闻资讯 -->
-            <div class="category-row">
-                <div class="category-header">
-                    <div class="category-icon">
-                        <i class="fas fa-newspaper"></i>
-                    </div>
-                    <h2 class="category-title">新闻资讯</h2>
-                </div>
-                <div class="links-container">
-                    <a href="https://reuters.com" target="_blank" class="link-item" rel="nofollow">路透社</a>
-                    <a href="https://bbc.com" target="_blank" class="link-item" rel="nofollow">BBC新闻</a>
-                    <a href="https://cnbc.com" target="_blank" class="link-item" rel="nofollow">CNBC</a>
-                    <a href="https://www.theguardian.com" target="_blank" class="link-item" rel="nofollow">卫报</a>
-                    <a href="https://www.nytimes.com" target="_blank" class="link-item" rel="nofollow">纽约时报</a>
-                    <a href="https://www.ft.com" target="_blank" class="link-item" rel="nofollow">金融时报</a>
-                </div>
-            </div>
+        <div class="categories-container" id="categories-container">
+            <!-- 分类内容将通过JavaScript动态生成 -->
         </div>
         
         <footer>
@@ -538,6 +616,60 @@ const html = `<!DOCTYPE html>
     </div>
 
     <script>
+        // 分类、链接名称和链接数据
+        const categoriesData = ${JSON.stringify(categoriesData)};
+        
+        // 生成分类和链接的HTML
+        function generateCategoriesHTML() {
+            const container = document.getElementById('categories-container');
+            container.innerHTML = '';
+            
+            categoriesData.forEach(category => {
+                const categoryRow = document.createElement('div');
+                categoryRow.className = 'category-row';
+                
+                const categoryHeader = document.createElement('div');
+                categoryHeader.className = 'category-header';
+                
+                const categoryIcon = document.createElement('div');
+                categoryIcon.className = 'category-icon';
+                categoryIcon.innerHTML = '<i class="' + category.icon + '"></i>';
+                
+                const categoryTitle = document.createElement('h2');
+                categoryTitle.className = 'category-title';
+                categoryTitle.textContent = category.title;
+                
+                categoryHeader.appendChild(categoryIcon);
+                categoryHeader.appendChild(categoryTitle);
+                
+                const linksContainer = document.createElement('div');
+                linksContainer.className = 'links-container';
+                
+                category.links.forEach(link => {
+                    const linkItem = document.createElement('a');
+                    linkItem.className = 'link-item';
+                    linkItem.href = link.url;
+                    linkItem.target = '_blank';
+                    linkItem.rel = 'nofollow';
+                    linkItem.textContent = link.name;
+                    
+                    // 添加描述工具提示
+                    if (link.description) {
+                        const tooltip = document.createElement('span');
+                        tooltip.className = 'tooltip';
+                        tooltip.textContent = link.description;
+                        linkItem.appendChild(tooltip);
+                    }
+                    
+                    linksContainer.appendChild(linkItem);
+                });
+                
+                categoryRow.appendChild(categoryHeader);
+                categoryRow.appendChild(linksContainer);
+                container.appendChild(categoryRow);
+            });
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             const engineSelect = document.getElementById('engine-select');
             const searchInput = document.getElementById('search-input');
@@ -569,6 +701,9 @@ const html = `<!DOCTYPE html>
             
             engineSelect.value = 'duckduckgo';
             
+            // 生成分类和链接
+            generateCategoriesHTML();
+            
             const categoryRows = document.querySelectorAll('.category-row');
             categoryRows.forEach((row, index) => {
                 setTimeout(() => {
@@ -596,6 +731,7 @@ const html = `<!DOCTYPE html>
                 }
             });
         });
-    </script>
+    <\/script>
 </body>
 </html>`;
+}
