@@ -33,8 +33,8 @@ const categoriesData = [
             {"name": "Gemini", "url": "https://gemini.google.com/", "description": "Google推出的AI助手"},
             {"name": "元宝", "url": "https://yuanbao.tencent.com/", "description": "腾讯推出的AI助手"},
             {"name": "豆包", "url": "https://www.doubao.com/", "description": "字节跳动推出的AI助手"},
-			{"name": "扣子CN", "url": "https://space.coze.cn/", "description": "字节跳动推出的适合企业和团队的复杂工作流。"},
-			{"name": "扣子EN", "url": "https://www.coze.com/", "description": "字节跳动推出的适合企业和团队的复杂工作流。"},
+            {"name": "扣子CN", "url": "https://space.coze.cn/", "description": "字节跳动推出的适合企业和团队的复杂工作流。"},
+            {"name": "扣子EN", "url": "https://www.coze.com/", "description": "字节跳动推出的适合企业和团队的复杂工作流。"},
             {"name": "ima知识库", "url": "https://ima.qq.com/", "description": "智能知识管理与问答平台"}
         ]
     },
@@ -48,12 +48,12 @@ const categoriesData = [
             {"name": "北交所", "url": "https://www.bse.cn/audit/project_news.html", "description": "北交所项目动态"},
             {"name": "港交所", "url": "https://sc.hkexnews.hk/TuniS/www.hkexnews.hk/index_c.htm", "description": "香港IPO项目动态-披露易"},
             {"name": "美国证监会", "url": "https://www.sec.gov/search-filings", "description": "美国证监会IPO审核动态"},
-			{"name": "iposcoop", "url": "https://www.iposcoop.com/ipo-calendar/", "description": "第三方美股IPO动态"},
-			{"name": "产业通", "url": "https://chanyeos.com/smart-ke-b/#/home/homeSearch", "description": "各领域企业、园区信息聚合"},
-			{"name": "36氪创投", "url": "https://pitchhub.36kr.com/", "description": "融资新闻,创业项目,投资人动态,企业资讯,融资快报,项目信息"},
-			{"name": "未来智库", "url": "https://www.vzkoo.com/", "description": "各领域行研报告"},
-			{"name": "中财数据", "url": "https://data.cfi.cn/cfidata.aspx", "description": "二级市场数据"},
-			{"name": "同花顺数据", "url": "https://data.10jqka.com.cn/###", "description": "龙虎榜、业绩预告、资金流向、大宗交易等"}
+            {"name": "iposcoop", "url": "https://www.iposcoop.com/ipo-calendar/", "description": "第三方美股IPO动态"},
+            {"name": "产业通", "url": "https://chanyeos.com/smart-ke-b/#/home/homeSearch", "description": "各领域企业、园区信息聚合"},
+            {"name": "36氪创投", "url": "https://pitchhub.36kr.com/", "description": "融资新闻,创业项目,投资人动态,企业资讯,融资快报,项目信息"},
+            {"name": "未来智库", "url": "https://www.vzkoo.com/", "description": "各领域行研报告"},
+            {"name": "中财数据", "url": "https://data.cfi.cn/cfidata.aspx", "description": "二级市场数据"},
+            {"name": "同花顺数据", "url": "https://data.10jqka.com.cn/###", "description": "龙虎榜、业绩预告、资金流向、大宗交易等"}
         ]
     },
     {
@@ -82,8 +82,8 @@ const categoriesData = [
         "title": "公示查询",
         "icon": "fas fa-credit-card",
         "links": [
-			{"name": "信用江苏", "url": "https://credit.jiangsu.gov.cn/credit/xyfw/index.jhtml", "description": "江苏省企业信用查询"},
-			{"name": "信用上海", "url": "https://credit.fgw.sh.gov.cn/index.html", "description": "上海市企业信用查询"},
+            {"name": "信用江苏", "url": "https://credit.jiangsu.gov.cn/credit/xyfw/index.jhtml", "description": "江苏省企业信用查询"},
+            {"name": "信用上海", "url": "https://credit.fgw.sh.gov.cn/index.html", "description": "上海市企业信用查询"},
             {"name": "征信中心", "url": "https://ipcrs.pbccrc.org.cn/", "description": "中国人民银行征信中心"},
             {"name": "学信网", "url": "https://www.chsi.com.cn/", "description": "中国高等教育学生信息网"},
             {"name": "合规证明", "url": "https://ydzt.jszwfw.gov.cn/qyxxhcxtweb/#/", "description": "江苏省企业合规证明办理（含线上线下）"},			
@@ -91,7 +91,7 @@ const categoriesData = [
             {"name": "私募基金公示", "url": "https://gs.amac.org.cn/amac-infodisc/res/pof/fund/index.html", "description": "中国证券投资投资基金业协会-私募基金公示"},
             {"name": "私募管理人", "url": "https://gs.amac.org.cn/amac-infodisc/res/pof/manager/managerList.html", "description": "中国证券投资投资基金业协会-私募基金管理人公示"},
             {"name": "专利公示", "url": "http://epub.cnipa.gov.cn/", "description": "中国专利公告查询"}
-		]
+        ]
     },
     {
         "id": "government",
@@ -101,9 +101,9 @@ const categoriesData = [
             {"name": "苏州政务", "url": "https://sz.jszwfw.gov.cn/", "description": "苏州市政务服务中心"},
             {"name": "园区政务", "url": "https://szgyy.jszwfw.gov.cn/", "description": "苏州工业园区管委会政务服务中心"},
             {"name": "园区企服", "url": "https://sme.sipac.gov.cn/epheadline/home", "description": "苏州工业园区企业服务中心"},
-			{"name": "12333", "url": "https://si.12333.gov.cn/index.jhtml", "description": "国家社保服务-养老、失业、工伤保险"},
-			{"name": "江苏医保云", "url": "https://ybj.jszwfw.gov.cn/hsa-local/web/hallEnter/#/Index", "description": "江苏省医疗保障局网上服务大厅"},
-			{"name": "江苏人社", "url": "https://rs.jshrss.jiangsu.gov.cn/index/", "description": "江苏省人社厅网上服务大厅-个人、企业"}
+            {"name": "12333", "url": "https://si.12333.gov.cn/index.jhtml", "description": "国家社保服务-养老、失业、工伤保险"},
+            {"name": "江苏医保云", "url": "https://ybj.jszwfw.gov.cn/hsa-local/web/hallEnter/#/Index", "description": "江苏省医疗保障局网上服务大厅"},
+            {"name": "江苏人社", "url": "https://rs.jshrss.jiangsu.gov.cn/index/", "description": "江苏省人社厅网上服务大厅-个人、企业"}
         ]
     },
     {
@@ -117,7 +117,7 @@ const categoriesData = [
             {"name": "阿里云", "url": "https://www.aliyun.com/", "description": "阿里巴巴云计算服务平台"},
             {"name": "七牛", "url": "https://www.qiniu.com/", "description": "七牛云存储服务"},
             {"name": "又拍云", "url": "https://www.upyun.com/", "description": "又拍云存储服务"},
-			{"name": "Docker镜像", "url": "https://docker.eyuyun.com/", "description": "Docker镜像代理"},
+            {"name": "Docker镜像", "url": "https://docker.eyuyun.com/", "description": "Docker镜像代理"}
         ]
     }
 ];
@@ -150,7 +150,6 @@ function getHTML() {
             line-height: 1.6;
         }
         
-        /* 扁平模式基础样式 */
         body.flat-theme {
             background: #f5f7fa;
             animation: none;
@@ -340,11 +339,10 @@ function getHTML() {
             border-bottom: 1px solid #e2e8f0;
         }
         
-        /* 分类图标尺寸减小 */
         .category-icon {
-            font-size: 13px; /* 减小字体大小 */
-            width: 24px; /* 减小尺寸 */
-            height: 24px; /* 减小尺寸 */
+            font-size: 13px;
+            width: 24px;
+            height: 24px;
             background: rgba(52, 152, 219, 0.2);
             border-radius: 50%;
             display: flex;
@@ -359,9 +357,8 @@ function getHTML() {
             color: #3182ce;
         }
         
-        /* 分类标题字体减小 */
         .category-title {
-            font-size: 0.98rem; /* 减小字体大小 */
+            font-size: 0.98rem;
             color: #2c3e50;
             font-weight: 500;
         }
@@ -370,11 +367,14 @@ function getHTML() {
             color: #2d3748;
         }
         
+        /* 修改链接项和工具提示样式 */
         .links-container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
             gap: 10px;
             padding: 10px;
+            position: relative;
+            z-index: 1000;
         }
         
         .link-item {
@@ -392,6 +392,7 @@ function getHTML() {
             font-size: 14px;
             font-weight: 500;
             position: relative;
+            overflow: visible;
         }
         
         body.flat-theme .link-item {
@@ -415,21 +416,25 @@ function getHTML() {
         /* 链接描述工具提示样式 */
         .link-item .tooltip {
             visibility: hidden;
-            width: 200px;
+            min-width: 200px;
+            max-width: 300px;
             background-color: #333;
             color: white;
             text-align: center;
             border-radius: 6px;
-            padding: 5px;
+            padding: 8px;
             position: absolute;
-            z-index: 1;
+            z-index: 1001;
             bottom: 125%;
             left: 50%;
-            margin-left: -100px;
+            transform: translateX(-50%);
             opacity: 0;
             transition: opacity 0.3s;
-            font-size: 12px;
+            font-size: 14px;
             font-weight: normal;
+            white-space: normal;
+            word-wrap: break-word;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             pointer-events: none;
         }
         
@@ -447,6 +452,11 @@ function getHTML() {
         .link-item:hover .tooltip {
             visibility: visible;
             opacity: 1;
+        }
+        
+        /* 确保分类区域不会隐藏工具提示 */
+        .category-row {
+            overflow: visible !important;
         }
         
         footer {
@@ -502,7 +512,7 @@ function getHTML() {
         @media (min-width: 1025px) {
             .link-item {
                 padding: 10px 8px;
-                height: 55px;
+                height: 45px;
             }
         }
         
@@ -551,9 +561,8 @@ function getHTML() {
                 display: none;
             }
             
-            /* 小屏幕分类标题字体减小 */
             .category-title {
-                font-size: 0.95rem; /* 减小字体大小 */
+                font-size: 0.95rem;
                 text-align: center;
                 width: 100%;
             }
@@ -568,6 +577,11 @@ function getHTML() {
                 padding: 10px 4px;
                 height: 45px;
                 font-size: 13px;
+            }
+            
+            .link-item .tooltip {
+                max-width: 200px;
+                font-size: 12px;
             }
         }
         
