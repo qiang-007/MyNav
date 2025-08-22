@@ -11,7 +11,7 @@ async function handleRequest(request) {
     })
 }
 
-// 分类、链接名称和链接数据 - 放在顶部方便编辑
+// 分类、链接名称和链接数据
 const categoriesData = [
     {
         "id": "common",
@@ -33,8 +33,8 @@ const categoriesData = [
             {"name": "Gemini", "url": "https://gemini.google.com/", "description": "Google推出的AI助手"},
             {"name": "元宝", "url": "https://yuanbao.tencent.com/", "description": "腾讯推出的AI助手"},
             {"name": "豆包", "url": "https://www.doubao.com/", "description": "字节跳动推出的AI助手"},
-            {"name": "扣子CN", "url": "https://space.coze.cn/", "description": "字节跳动推出的适合企业和团队的复杂工作流。"},
-            {"name": "扣子EN", "url": "https://www.coze.com/", "description": "字节跳动推出的适合企业和团队的复杂工作流。"},
+            {"name": "扣子CN", "url": "https://space.coze.cn/", "description": "字节跳动推出的适合企业和团队的复杂工作流"},
+            {"name": "扣子EN", "url": "https://www.coze.com/", "description": "字节跳动推出的适合企业和团队的复杂工作流"},
             {"name": "ima知识库", "url": "https://ima.qq.com/", "description": "智能知识管理与问答平台"}
         ]
     },
@@ -367,7 +367,6 @@ function getHTML() {
             color: #2d3748;
         }
         
-        /* 修改链接项和工具提示样式 */
         .links-container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
@@ -413,16 +412,17 @@ function getHTML() {
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
         }
         
-        /* 链接描述工具提示样式 */
+        /* 优化工具提示样式 - 确保不超出屏幕 */
         .link-item .tooltip {
             visibility: hidden;
-            min-width: 200px;
-            max-width: 300px;
-            background-color: #333;
+            width: auto;
+            min-width: 180px;
+            max-width: min(280px, calc(100vw - 40px));
+            background-color: rgba(51, 51, 51, 0.95);
             color: white;
             text-align: center;
-            border-radius: 6px;
-            padding: 8px;
+            border-radius: 8px;
+            padding: 10px 12px;
             position: absolute;
             z-index: 1001;
             bottom: 125%;
@@ -430,12 +430,16 @@ function getHTML() {
             transform: translateX(-50%);
             opacity: 0;
             transition: opacity 0.3s;
-            font-size: 14px;
+            font-size: 13px;
+            line-height: 1.4;
             font-weight: normal;
             white-space: normal;
             word-wrap: break-word;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            word-break: break-word;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
             pointer-events: none;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.1);
         }
         
         .link-item .tooltip::after {
@@ -446,7 +450,7 @@ function getHTML() {
             margin-left: -5px;
             border-width: 5px;
             border-style: solid;
-            border-color: #333 transparent transparent transparent;
+            border-color: rgba(51, 51, 51, 0.95) transparent transparent transparent;
         }
         
         .link-item:hover .tooltip {
@@ -473,12 +477,13 @@ function getHTML() {
             border-top: 1px solid #e2e8f0;
         }
         
+        /* 优化主题切换按钮 */
         .theme-toggle {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 45px;
-            height: 45px;
+            bottom: 15px;
+            right: 15px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             background: #3498db;
             color: white;
@@ -506,13 +511,14 @@ function getHTML() {
         }
         
         .theme-toggle i {
-            font-size: 20px;
+            font-size: 18px;
         }
         
+        /* 响应式调整 */
         @media (min-width: 1025px) {
             .link-item {
                 padding: 10px 8px;
-                height: 45px;
+                height: 55px;
             }
         }
         
@@ -580,8 +586,21 @@ function getHTML() {
             }
             
             .link-item .tooltip {
-                max-width: 200px;
+                max-width: min(240px, calc(100vw - 30px));
                 font-size: 12px;
+                padding: 8px 10px;
+            }
+            
+            /* 小屏幕下主题按钮调整 */
+            .theme-toggle {
+                width: 32px;
+                height: 32px;
+                bottom: 12px;
+                right: 12px;
+            }
+            
+            .theme-toggle i {
+                font-size: 16px;
             }
         }
         
@@ -594,6 +613,18 @@ function getHTML() {
             .link-item {
                 padding: 8px 4px;
                 height: 42px;
+            }
+            
+            /* 极小屏幕下主题按钮调整 */
+            .theme-toggle {
+                width: 30px;
+                height: 30px;
+                bottom: 10px;
+                right: 10px;
+            }
+            
+            .theme-toggle i {
+                font-size: 14px;
             }
         }
     </style>
@@ -686,6 +717,41 @@ function getHTML() {
             });
         }
 
+        // 动态调整Tooltip位置
+        function adjustTooltipPositions() {
+            const linkItems = document.querySelectorAll('.link-item');
+            
+            linkItems.forEach(linkItem => {
+                const tooltip = linkItem.querySelector('.tooltip');
+                if (!tooltip) return;
+                
+                // 重置位置
+                tooltip.style.left = '50%';
+                tooltip.style.transform = 'translateX(-50%)';
+                
+                const linkRect = linkItem.getBoundingClientRect();
+                const tooltipRect = tooltip.getBoundingClientRect();
+                
+                // 检查左侧空间
+                if (tooltipRect.left < 10) {
+                    tooltip.style.left = '0';
+                    tooltip.style.transform = 'translateX(0)';
+                }
+                
+                // 检查右侧空间
+                if (tooltipRect.right > window.innerWidth - 10) {
+                    tooltip.style.left = '100%';
+                    tooltip.style.transform = 'translateX(-100%)';
+                }
+                
+                // 检查上方空间
+                if (tooltipRect.top < 10) {
+                    tooltip.style.bottom = 'auto';
+                    tooltip.style.top = '125%';
+                }
+            });
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             const engineSelect = document.getElementById('engine-select');
             const searchInput = document.getElementById('search-input');
@@ -720,6 +786,12 @@ function getHTML() {
             // 生成分类和链接
             generateCategoriesHTML();
             
+            // 调整Tooltip位置
+            adjustTooltipPositions();
+            
+            // 窗口大小变化时重新调整位置
+            window.addEventListener('resize', adjustTooltipPositions);
+            
             const categoryRows = document.querySelectorAll('.category-row');
             categoryRows.forEach((row, index) => {
                 setTimeout(() => {
@@ -744,6 +816,17 @@ function getHTML() {
                 } else {
                     icon.className = 'fas fa-palette';
                     this.title = '切换到扁平模式';
+                }
+                
+                // 主题切换后重新调整位置
+                setTimeout(adjustTooltipPositions, 100);
+            });
+            
+            // 鼠标移动时动态调整Tooltip位置
+            document.addEventListener('mousemove', function(e) {
+                const hoveredLink = document.querySelector('.link-item:hover');
+                if (hoveredLink) {
+                    adjustTooltipPositions();
                 }
             });
         });
