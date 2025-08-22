@@ -89,8 +89,9 @@ const categoriesData = [
             {"name": "合规证明", "url": "https://ydzt.jszwfw.gov.cn/qyxxhcxtweb/#/", "description": "江苏省企业合规证明办理（含线上线下）"},			
             {"name": "证券失信查询", "url": "http://neris.csrc.gov.cn/shixinchaxun/", "description": "证券期货市场失信记录查询平台"},
             {"name": "私募基金公示", "url": "https://gs.amac.org.cn/amac-infodisc/res/pof/fund/index.html", "description": "中国证券投资投资基金业协会-私募基金公示"},
-            {"name": "私募管理人", "url": "https://gs.amac.org.cn/amac-infodisc/res/pof/manager/managerList.html", "description": "中国证券投资投资基金业协会-私募基金管理人公示"}
-        ]
+            {"name": "私募管理人", "url": "https://gs.amac.org.cn/amac-infodisc/res/pof/manager/managerList.html", "description": "中国证券投资投资基金业协会-私募基金管理人公示"},
+            {"name": "专利公示", "url": "http://epub.cnipa.gov.cn/", "description": "中国专利公告查询"}
+		]
     },
     {
         "id": "government",
@@ -115,7 +116,8 @@ const categoriesData = [
             {"name": "腾讯云", "url": "https://cloud.tencent.com/", "description": "腾讯云计算服务平台"},
             {"name": "阿里云", "url": "https://www.aliyun.com/", "description": "阿里巴巴云计算服务平台"},
             {"name": "七牛", "url": "https://www.qiniu.com/", "description": "七牛云存储服务"},
-            {"name": "又拍云", "url": "https://www.upyun.com/", "description": "又拍云存储服务"}
+            {"name": "又拍云", "url": "https://www.upyun.com/", "description": "又拍云存储服务"},
+			{"name": "Docker镜像", "url": "https://docker.eyuyun.com/", "description": "Docker镜像代理"},
         ]
     }
 ];
