@@ -1,42 +1,44 @@
 addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request))
+    event.respondWith(handleRequest(event.request))
 })
-
+  
 async function handleRequest(request) {
-  return new Response(html, {
-    headers: { 
-      'content-type': 'text/html; charset=utf-8',
-      'cache-control': 'public, max-age=3600'
-    }
-  })
+    return new Response(html, {
+      headers: { 
+        'content-type': 'text/html; charset=utf-8',
+        'cache-control': 'public, max-age=3600'
+      }
+    })
 }
-
+  
 const html = `<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>护眼导航页</title>
+    <title>简约导航</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, 
+                         "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", 
+                         "WenQuanYi Micro Hei", sans-serif;
         }
         
         body {
             background: linear-gradient(135deg, #e0f7fa, #c8e6c9, #dcedc8);
             min-height: 100vh;
-            padding: 12px;
+            padding: 6px 2px;
             color: #2c3e50;
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
-            transition: all 0.5s ease;
+            line-height: 1.6;
         }
         
-        /* 扁平化风格 */
+        /* 扁平模式基础样式 */
         body.flat-theme {
             background: #f5f7fa;
             animation: none;
@@ -60,10 +62,14 @@ const html = `<!DOCTYPE html>
         }
         
         .logo {
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             margin-bottom: 8px;
             color: #2c3e50;
             font-weight: 500;
+        }
+        
+        body.flat-theme .logo {
+            color: #4a5568;
         }
         
         .search-container {
@@ -78,9 +84,20 @@ const html = `<!DOCTYPE html>
             border: 1px solid rgba(0, 0, 0, 0.1);
         }
         
+        body.flat-theme .search-container {
+            background: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e2e8f0;
+        }
+        
         .search-container:focus-within {
             box-shadow: 0 4px 15px rgba(52, 152, 219, 0.2);
             background: rgba(255, 255, 255, 0.95);
+        }
+        
+        body.flat-theme .search-container:focus-within {
+            box-shadow: 0 4px 12px rgba(66, 153, 225, 0.2);
+            background: white;
         }
         
         .search-engine-selector {
@@ -90,10 +107,18 @@ const html = `<!DOCTYPE html>
             border-right: 1px solid rgba(0, 0, 0, 0.1);
         }
         
+        body.flat-theme .search-engine-selector {
+            border-right: 1px solid #e2e8f0;
+        }
+        
         .engine-icon {
             font-size: 16px;
             color: #3498db;
             margin-right: 6px;
+        }
+        
+        body.flat-theme .engine-icon {
+            color: #4299e1;
         }
         
         select {
@@ -106,6 +131,10 @@ const html = `<!DOCTYPE html>
             width: 130px;
         }
         
+        body.flat-theme select {
+            color: #4a5568;
+        }
+        
         .search-input {
             flex: 1;
             padding: 10px 12px;
@@ -116,8 +145,16 @@ const html = `<!DOCTYPE html>
             color: #2c3e50;
         }
         
+        body.flat-theme .search-input {
+            color: #4a5568;
+        }
+        
         .search-input::placeholder {
             color: rgba(44, 62, 80, 0.5);
+        }
+        
+        body.flat-theme .search-input::placeholder {
+            color: #a0aec0;
         }
         
         .search-btn {
@@ -131,8 +168,16 @@ const html = `<!DOCTYPE html>
             transition: all 0.3s;
         }
         
+        body.flat-theme .search-btn {
+            background: #4299e1;
+        }
+        
         .search-btn:hover {
             background: #2980b9;
+        }
+        
+        body.flat-theme .search-btn:hover {
+            background: #3182ce;
         }
         
         .categories-container {
@@ -154,16 +199,20 @@ const html = `<!DOCTYPE html>
             transition: transform 0.3s, box-shadow 0.3s;
         }
         
+        body.flat-theme .category-row {
+            background: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border: 1px solid #eaeaea;
+        }
+        
         .category-row:hover {
             transform: translateY(-3px);
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
         }
         
-        /* 扁平化风格下的分类行 */
-        body.flat-theme .category-row {
-            background: white;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-            border: 1px solid #eaeaea;
+        body.flat-theme .category-row:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
         
         .category-header {
@@ -174,16 +223,16 @@ const html = `<!DOCTYPE html>
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
         
-        /* 扁平化风格下的分类标题 */
         body.flat-theme .category-header {
-            background: #f0f7ff;
-            border-bottom: 1px solid #e0e0e0;
+            background: #ebf8ff;
+            border-bottom: 1px solid #e2e8f0;
         }
         
+        /* 分类图标尺寸减小 */
         .category-icon {
-            font-size: 14px;
-            width: 28px;
-            height: 28px;
+            font-size: 13px; /* 减小字体大小 */
+            width: 24px; /* 减小尺寸 */
+            height: 24px; /* 减小尺寸 */
             background: rgba(52, 152, 219, 0.2);
             border-radius: 50%;
             display: flex;
@@ -193,31 +242,49 @@ const html = `<!DOCTYPE html>
             color: #3498db;
         }
         
+        body.flat-theme .category-icon {
+            background: #bee3f8;
+            color: #3182ce;
+        }
+        
+        /* 分类标题字体减小 */
         .category-title {
-            font-size: 1.0rem;
+            font-size: 0.98rem; /* 减小字体大小 */
             color: #2c3e50;
             font-weight: 500;
         }
         
+        body.flat-theme .category-title {
+            color: #2d3748;
+        }
+        
         .links-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
             gap: 10px;
             padding: 10px;
         }
         
         .link-item {
             display: flex;
-            flex-direction: column;
             align-items: center;
+            justify-content: center;
             text-decoration: none;
             color: #2c3e50;
             padding: 8px 6px;
             border-radius: 6px;
             background: rgba(255, 255, 255, 0.6);
             transition: all 0.3s ease;
-            height: 75px;
-            justify-content: center;
+            height: 50px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        body.flat-theme .link-item {
+            background: #f7fafc;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+            border: 1px solid #edf2f7;
         }
         
         .link-item:hover {
@@ -226,31 +293,10 @@ const html = `<!DOCTYPE html>
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         
-        /* 扁平化风格下的链接项 */
-        body.flat-theme .link-item {
-            background: #f8f9fa;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-        }
-        
         body.flat-theme .link-item:hover {
-            background: #e9ecef;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
-        }
-        
-        .link-icon {
-            font-size: 22px;
-            margin-bottom: 5px;
-            color: #3498db;
-        }
-        
-        .link-text {
-            font-size: 13px;
-            text-align: center;
-            word-break: break-word;
-            line-height: 1.3;
-            font-weight: 500;
-            max-width: 100%;
-            padding: 0 4px;
+            background: #edf2f7;
+            transform: translateY(-2px);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
         }
         
         footer {
@@ -262,13 +308,17 @@ const html = `<!DOCTYPE html>
             margin-top: 15px;
         }
         
-        /* 风格切换按钮 - 变小了 */
+        body.flat-theme footer {
+            color: #718096;
+            border-top: 1px solid #e2e8f0;
+        }
+        
         .theme-toggle {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            width: 40px; /* 变小了 */
-            height: 40px; /* 变小了 */
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
             background: #3498db;
             color: white;
@@ -276,37 +326,36 @@ const html = `<!DOCTYPE html>
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             z-index: 1000;
             transition: all 0.3s ease;
         }
         
+        body.flat-theme .theme-toggle {
+            background: #4299e1;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
         .theme-toggle:hover {
             transform: scale(1.1);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        body.flat-theme .theme-toggle:hover {
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
         }
         
         .theme-toggle i {
-            font-size: 18px; /* 变小了 */
+            font-size: 20px;
         }
         
-        /* 大屏幕优化 */
         @media (min-width: 1025px) {
             .link-item {
                 padding: 10px 8px;
-                height: 75px;
-            }
-            
-            .link-icon {
-                font-size: 24px;
-            }
-            
-            .link-text {
-                font-size: 14px;
+                height: 55px;
             }
         }
         
-        /* 小屏幕适配 */
         @media (max-width: 768px) {
             .container {
                 padding: 8px;
@@ -330,6 +379,10 @@ const html = `<!DOCTYPE html>
                 justify-content: center;
             }
             
+            body.flat-theme .search-engine-selector {
+                border-bottom: 1px solid #e2e8f0;
+            }
+            
             select {
                 width: 120px;
             }
@@ -341,14 +394,16 @@ const html = `<!DOCTYPE html>
             
             .category-header {
                 padding: 6px 10px;
+                justify-content: center;
             }
             
             .category-icon {
-                display: none; /* 隐藏分类图标 */
+                display: none;
             }
             
+            /* 小屏幕分类标题字体减小 */
             .category-title {
-                font-size: 1.1rem;
+                font-size: 0.95rem; /* 减小字体大小 */
                 text-align: center;
                 width: 100%;
             }
@@ -360,37 +415,12 @@ const html = `<!DOCTYPE html>
             }
             
             .link-item {
-                padding: 12px 6px;
-                height: auto;
-                min-height: 50px;
-                justify-content: center;
-            }
-            
-            .link-icon {
-                display: none; /* 隐藏链接图标 */
-            }
-            
-            .link-text {
-                font-size: 14px;
-                line-height: 1.4;
-                font-weight: 600;
-                padding: 0;
-            }
-            
-            /* 小屏幕下的风格切换按钮 */
-            .theme-toggle {
-                width: 36px; /* 更小 */
-                height: 36px; /* 更小 */
-                bottom: 15px;
-                right: 15px;
-            }
-            
-            .theme-toggle i {
-                font-size: 16px; /* 更小 */
+                padding: 10px 4px;
+                height: 45px;
+                font-size: 13px;
             }
         }
         
-        /* 超小屏幕适配 */
         @media (max-width: 480px) {
             .links-container {
                 grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
@@ -398,12 +428,8 @@ const html = `<!DOCTYPE html>
             }
             
             .link-item {
-                padding: 6px 4px;
-                height: 65px;
-            }
-            
-            .link-text {
-                font-size: 11px;
+                padding: 8px 4px;
+                height: 42px;
             }
         }
     </style>
@@ -411,9 +437,7 @@ const html = `<!DOCTYPE html>
 <body>
     <div class="container">
         <div class="header">
-            <div class="logo">
-                <i class="fas fa-compass"></i> 护眼导航
-            </div>
+            <div class="logo">简约导航</div>
             
             <div class="search-container">
                 <div class="search-engine-selector">
@@ -440,30 +464,12 @@ const html = `<!DOCTYPE html>
                     <h2 class="category-title">常用网站</h2>
                 </div>
                 <div class="links-container">
-                    <a href="https://github.com" target="_blank" class="link-item" rel="nofollow">
-                        <i class="fab fa-github link-icon"></i>
-                        <span class="link-text">GitHub</span>
-                    </a>
-                    <a href="https://gitee.com" target="_blank" class="link-item" rel="nofollow">
-                        <i class="fas fa-code-branch link-icon"></i>
-                        <span class="link-text">Gitee</span>
-                    </a>
-                    <a href="https://stackoverflow.com" target="_blank" class="link-item" rel="nofollow">
-                        <i class="fab fa-stack-overflow link-icon"></i>
-                        <span class="link-text">Stack Overflow</span>
-                    </a>
-                    <a href="https://zhihu.com" target="_blank" class="link-item" rel="nofollow">
-                        <i class="fas fa-question-circle link-icon"></i>
-                        <span class="link-text">知乎</span>
-                    </a>
-                    <a href="https://bilibili.com" target="_blank" class="link-item" rel="nofollow">
-                        <i class="fas fa-play-circle link-icon"></i>
-                        <span class="link-text">哔哩哔哩</span>
-                    </a>
-                    <a href="https://youtube.com" target="_blank" class="link-item" rel="nofollow">
-                        <i class="fab fa-youtube link-icon"></i>
-                        <span class="link-text">YouTube</span>
-                    </a>
+                    <a href="https://github.com" target="_blank" class="link-item" rel="nofollow">GitHub</a>
+                    <a href="https://gitee.com" target="_blank" class="link-item" rel="nofollow">Gitee</a>
+                    <a href="https://stackoverflow.com" target="_blank" class="link-item" rel="nofollow">Stack Overflow</a>
+                    <a href="https://zhihu.com" target="_blank" class="link-item" rel="nofollow">知乎</a>
+                    <a href="https://bilibili.com" target="_blank" class="link-item" rel="nofollow">哔哩哔哩</a>
+                    <a href="https://youtube.com" target="_blank" class="link-item" rel="nofollow">YouTube</a>
                 </div>
             </div>
             
@@ -476,34 +482,12 @@ const html = `<!DOCTYPE html>
                     <h2 class="category-title">交易所</h2>
                 </div>
                 <div class="links-container">
-                    <a href="https://binance.com" target="_blank" class="link-item" rel="nofollow">
-                        <i class="fas fa-coins link-icon"></i>
-                        <span class="link-text">币安</span>
-                    </a>
-                    <a href="https://coinbase.com" target="_blank" class="link-item" rel="nofollow">
-                        <i class="fas fa-wallet link-icon"></i>
-                        <span class="link-text">Coinbase</span>
-                    </a>
-                    <a href="https://okx.com" target="_blank" class="link-item" rel="nofollow">
-                        <i class="fas fa-exchange-alt link-icon"></i>
-                        <span class="link-text">OKX</span>
-                    </a>
-                    <a href="https://huobi.com" target="_blank" class="link-item" rel="nofollow">
-                        <i class="fas fa-fire link-icon"></i>
-                        <span class="link-text">火币</span>
-                    </a>
-                    <a href="https://kraken.com" target="_blank" class="link-item" rel="nofollow">
-                        <i class="fas fa-dragon link-icon"></i>
-                        <span class="link-text">Kraken</span>
-                    </a>
-                    <a href="https://bybit.com" target="_blank" class="link-item" rel="nofollow">
-                        <i class="fas fa-chart-line link-icon"></i>
-                        <span class="link-text">Bybit</span>
-                    </a>
-                    <a href="https://www.gate.io" target="_blank" class="link-item" rel="nofollow">
-                        <i class="fas fa-door-open link-icon"></i>
-                        <span class="link-text">Gate.io</span>
-                    </a>
+                    <a href="https://binance.com" target="_blank" class="link-item" rel="nofollow">币安</a>
+                    <a href="https://coinbase.com" target="_blank" class="link-item" rel="nofollow">Coinbase</a>
+                    <a href="https://okx.com" target="_blank" class="link-item" rel="nofollow">OKX</a>
+                    <a href="https://huobi.com" target="_blank" class="link-item" rel="nofollow">火币</a>
+                    <a href="https://kraken.com" target="_blank" class="link-item" rel="nofollow">Kraken</a>
+                    <a href="https://bybit.com" target="_blank" class="link-item" rel="nofollow">Bybit</a>
                 </div>
             </div>
             
@@ -516,30 +500,12 @@ const html = `<!DOCTYPE html>
                     <h2 class="category-title">AI工具</h2>
                 </div>
                 <div class="links-container">
-                    <a href="https://openai.com" target="_blank" class="link-item" rel="nofollow">
-                        <i class="fas fa-brain link-icon"></i>
-                        <span class="link-text">OpenAI</span>
-                    </a>
-                    <a href="https://deepmind.com" target="_blank" class="link-item" rel="nofollow">
-                        <i class="fas fa-infinity link-icon"></i>
-                        <span class="link-text">DeepMind</span>
-                    </a>
-                    <a href="https://huggingface.co" target="_blank" class="link-item" rel="nofollow">
-                        <i class="fas fa-smile link-icon"></i>
-                        <span class="link-text">Hugging Face</span>
-                    </a>
-                    <a href="https://www.midjourney.com" target="_blank" class="link-item" rel="nofollow">
-                        <i class="fas fa-image link-icon"></i>
-                        <span class="link-text">Midjourney</span>
-                    </a>
-                    <a href="https://stability.ai" target="_blank" class="link-item" rel="nofollow">
-                        <i class="fas fa-project-diagram link-icon"></i>
-                        <span class="link-text">Stable Diffusion</span>
-                    </a>
-                    <a href="https://www.anthropic.com" target="_blank" class="link-item" rel="nofollow">
-                        <i class="fas fa-robot link-icon"></i>
-                        <span class="link-text">Claude</span>
-                    </a>
+                    <a href="https://openai.com" target="_blank" class="link-item" rel="nofollow">OpenAI</a>
+                    <a href="https://deepmind.com" target="_blank" class="link-item" rel="nofollow">DeepMind</a>
+                    <a href="https://huggingface.co" target="_blank" class="link-item" rel="nofollow">Hugging Face</a>
+                    <a href="https://www.midjourney.com" target="_blank" class="link-item" rel="nofollow">Midjourney</a>
+                    <a href="https://stability.ai" target="_blank" class="link-item" rel="nofollow">Stable Diffusion</a>
+                    <a href="https://www.anthropic.com" target="_blank" class="link-item" rel="nofollow">Claude</a>
                 </div>
             </div>
             
@@ -552,40 +518,21 @@ const html = `<!DOCTYPE html>
                     <h2 class="category-title">新闻资讯</h2>
                 </div>
                 <div class="links-container">
-                    <a href="https://reuters.com" target="_blank" class="link-item" rel="nofollow">
-                        <i class="fas fa-globe-americas link-icon"></i>
-                        <span class="link-text">路透社</span>
-                    </a>
-                    <a href="https://bbc.com" target="_blank" class="link-item" rel="nofollow">
-                        <i class="fas fa-tv link-icon"></i>
-                        <span class="link-text">BBC新闻</span>
-                    </a>
-                    <a href="https://cnbc.com" target="_blank" class="link-item" rel="nofollow">
-                        <i class="fas fa-chart-line link-icon"></i>
-                        <span class="link-text">CNBC</span>
-                    </a>
-                    <a href="https://www.theguardian.com" target="_blank" class="link-item" rel="nofollow">
-                        <i class="fas fa-shield-alt link-icon"></i>
-                        <span class="link-text">卫报</span>
-                    </a>
-                    <a href="https://www.nytimes.com" target="_blank" class="link-item" rel="nofollow">
-                        <i class="fas fa-newspaper link-icon"></i>
-                        <span class="link-text">纽约时报</span>
-                    </a>
-                    <a href="https://www.ft.com" target="_blank" class="link-item" rel="nofollow">
-                        <i class="fas fa-money-bill-wave link-icon"></i>
-                        <span class="link-text">金融时报</span>
-                    </a>
+                    <a href="https://reuters.com" target="_blank" class="link-item" rel="nofollow">路透社</a>
+                    <a href="https://bbc.com" target="_blank" class="link-item" rel="nofollow">BBC新闻</a>
+                    <a href="https://cnbc.com" target="_blank" class="link-item" rel="nofollow">CNBC</a>
+                    <a href="https://www.theguardian.com" target="_blank" class="link-item" rel="nofollow">卫报</a>
+                    <a href="https://www.nytimes.com" target="_blank" class="link-item" rel="nofollow">纽约时报</a>
+                    <a href="https://www.ft.com" target="_blank" class="link-item" rel="nofollow">金融时报</a>
                 </div>
             </div>
         </div>
         
         <footer>
-            <p>© 2023 护眼导航页 | 使用Font Awesome图标库</p>
+            <p>© 2023 简约导航页 | 专注效率与简洁</p>
         </footer>
     </div>
     
-    <!-- 风格切换按钮 - 变小了 -->
     <div class="theme-toggle" id="theme-toggle">
         <i class="fas fa-palette"></i>
     </div>
@@ -597,7 +544,6 @@ const html = `<!DOCTYPE html>
             const searchBtn = document.getElementById('search-btn');
             const themeToggle = document.getElementById('theme-toggle');
             
-            // 搜索引擎配置
             const engines = {
                 baidu: 'https://www.baidu.com/s?wd=',
                 google: 'https://www.google.com/search?q=',
@@ -605,7 +551,6 @@ const html = `<!DOCTYPE html>
                 duckduckgo: 'https://duckduckgo.com/?q='
             };
             
-            // 搜索功能
             function performSearch() {
                 const engine = engines[engineSelect.value];
                 const query = searchInput.value.trim();
@@ -615,7 +560,6 @@ const html = `<!DOCTYPE html>
                 }
             }
             
-            // 事件监听
             searchBtn.addEventListener('click', performSearch);
             searchInput.addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') {
@@ -623,10 +567,8 @@ const html = `<!DOCTYPE html>
                 }
             });
             
-            // 设置默认搜索引擎为DuckDuckGo
             engineSelect.value = 'duckduckgo';
             
-            // 添加动画效果
             const categoryRows = document.querySelectorAll('.category-row');
             categoryRows.forEach((row, index) => {
                 setTimeout(() => {
@@ -641,11 +583,9 @@ const html = `<!DOCTYPE html>
                 }, index * 100);
             });
             
-            // 主题切换功能
             themeToggle.addEventListener('click', function() {
                 document.body.classList.toggle('flat-theme');
                 
-                // 更新按钮图标
                 const icon = this.querySelector('i');
                 if (document.body.classList.contains('flat-theme')) {
                     icon.className = 'fas fa-eye';
