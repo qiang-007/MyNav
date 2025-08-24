@@ -11,118 +11,139 @@ async function handleRequest(request) {
     })
 }
 
-// 分类、链接名称和链接数据
-const categoriesData = [
-    {
-        "id": "common",
-        "title": "常用网站",
-        "icon": "fas fa-star",
-        "links": [
-            {"name": "GitHub", "url": "https://github.com", "description": "全球最大的代码托管平台"},
-            {"name": "Cloudflare", "url": "https://dash.cloudflare.com", "description": "网络云平台"},
-            {"name": "52论坛", "url": "https://52.pojie.com", "description": "网络技术交流来论坛"},
-            {"name": "哔哩哔哩", "url": "https://bilibili.com", "description": "中国年轻人文化社区"},
-            {"name": "YouTube", "url": "https://youtube.com", "description": "全球最大的视频分享平台"}
-        ]
-    },
-    {
-        "id": "ai",
-        "title": "AI",
-        "icon": "fas fa-robot",
-        "links": [
-            {"name": "Gemini", "url": "https://gemini.google.com/", "description": "Google推出的AI助手"},
-            {"name": "元宝", "url": "https://yuanbao.tencent.com/", "description": "腾讯推出的AI助手"},
-            {"name": "豆包", "url": "https://www.doubao.com/", "description": "字节跳动推出的AI助手"},
-            {"name": "扣子CN", "url": "https://space.coze.cn/", "description": "字节跳动推出的适合企业和团队的复杂工作流"},
-            {"name": "扣子EN", "url": "https://www.coze.com/", "description": "字节跳动推出的适合企业和团队的复杂工作流"},
-            {"name": "ima知识库", "url": "https://ima.qq.com/", "description": "智能知识管理与问答平台"}
-        ]
-    },
-    {
-        "id": "ipo",
-        "title": "IPO与投融资",
-        "icon": "fas fa-chart-line",
-        "links": [
-            {"name": "深交所", "url": "http://listing.szse.cn/projectdynamic/ipo/index.html", "description": "深交所项目动态"},
-            {"name": "上交所", "url": "https://www.sse.com.cn/listing/renewal/ipo/", "description": "上交所项目动态"},
-            {"name": "北交所", "url": "https://www.bse.cn/audit/project_news.html", "description": "北交所项目动态"},
-            {"name": "港交所", "url": "https://sc.hkexnews.hk/TuniS/www.hkexnews.hk/index_c.htm", "description": "香港IPO项目动态-披露易"},
-            {"name": "美国证监会", "url": "https://www.sec.gov/search-filings", "description": "美国证监会IPO审核动态"},
-            {"name": "iposcoop", "url": "https://www.iposcoop.com/ipo-calendar/", "description": "第三方美股IPO动态"},
-            {"name": "产业通", "url": "https://chanyeos.com/smart-ke-b/#/home/homeSearch", "description": "各领域企业、园区信息聚合"},
-            {"name": "36氪创投", "url": "https://pitchhub.36kr.com/", "description": "融资新闻,创业项目,投资人动态,企业资讯,融资快报,项目信息"},
-            {"name": "未来智库", "url": "https://www.vzkoo.com/", "description": "各领域行研报告"},
-            {"name": "中财数据", "url": "https://data.cfi.cn/cfidata.aspx", "description": "二级市场数据"},
-            {"name": "同花顺数据", "url": "https://data.10jqka.com.cn/###", "description": "龙虎榜、业绩预告、资金流向、大宗交易等"}
-        ]
-    },
-    {
-        "id": "legal",
-        "title": "法律",
-        "icon": "fas fa-gavel",
-        "links": [
-            {"name": "证期法规", "url": "http://www.csrc.gov.cn/pub/newsite/flb/flfg/", "description": "证监会法律法规数据库"},
-            {"name": "裁判文书网", "url": "https://wenshu.court.gov.cn/", "description": "中国裁判文书公开平台"},
-            {"name": "执行信息网", "url": "https://zxgk.court.gov.cn/", "description": "全国法院被执行人信息查询"},
-            {"name": "诉讼资产网", "url": "https://www.rmfysszc.gov.cn/", "description": "人民法院诉讼资产网"},
-            {"name": "阿里拍卖", "url": "https://sf.taobao.com/", "description": "司法拍卖平台"},
-            {"name": "openlaw", "url": "https://openlaw.cn/", "description": "法律案例检索平台"}
-        ]
-    },
-    {
-        "id": "certification",
-        "title": "资质认定",
-        "icon": "fas fa-certificate",
-        "links": [
-            {"name": "高新企业", "url": "http://www.innocom.gov.cn/", "description": "高新技术企业认定管理工作网"}
-        ]
-    },
-    {
-        "id": "credit",
-        "title": "公示查询",
-        "icon": "fas fa-credit-card",
-        "links": [
-            {"name": "信用江苏", "url": "https://credit.jiangsu.gov.cn/credit/xyfw/index.jhtml", "description": "江苏省企业信用查询"},
-            {"name": "信用上海", "url": "https://credit.fgw.sh.gov.cn/index.html", "description": "上海市企业信用查询"},
-            {"name": "征信中心", "url": "https://ipcrs.pbccrc.org.cn/", "description": "中国人民银行征信中心"},
-            {"name": "学信网", "url": "https://www.chsi.com.cn/", "description": "中国高等教育学生信息网"},
-            {"name": "合规证明", "url": "https://ydzt.jszwfw.gov.cn/qyxxhcxtweb/#/", "description": "江苏省企业合规证明办理（含线上线下）"},			
-            {"name": "证券失信查询", "url": "http://neris.csrc.gov.cn/shixinchaxun/", "description": "证券期货市场失信记录查询平台"},
-            {"name": "私募基金公示", "url": "https://gs.amac.org.cn/amac-infodisc/res/pof/fund/index.html", "description": "中国证券投资投资基金业协会-私募基金公示"},
-            {"name": "私募管理人", "url": "https://gs.amac.org.cn/amac-infodisc/res/pof/manager/managerList.html", "description": "中国证券投资投资基金业协会-私募基金管理人公示"},
-            {"name": "专利公示", "url": "http://epub.cnipa.gov.cn/", "description": "中国专利公告查询"}
-        ]
-    },
-    {
-        "id": "government",
-        "title": "政务中心",
-        "icon": "fas fa-landmark",
-        "links": [
-            {"name": "苏州政务", "url": "https://sz.jszwfw.gov.cn/", "description": "苏州市政务服务中心"},
-            {"name": "园区政务", "url": "https://szgyy.jszwfw.gov.cn/", "description": "苏州工业园区管委会政务服务中心"},
-            {"name": "园区企服", "url": "https://sme.sipac.gov.cn/epheadline/home", "description": "苏州工业园区企业服务中心"},
-            {"name": "12333", "url": "https://si.12333.gov.cn/index.jhtml", "description": "国家社保服务-养老、失业、工伤保险"},
-            {"name": "江苏医保云", "url": "https://ybj.jszwfw.gov.cn/hsa-local/web/hallEnter/#/Index", "description": "江苏省医疗保障局网上服务大厅"},
-            {"name": "江苏人社", "url": "https://rs.jshrss.jiangsu.gov.cn/index/", "description": "江苏省人社厅网上服务大厅-个人、企业"}
-        ]
-    },
-    {
-        "id": "tech",
-        "title": "IT技术",
-        "icon": "fas fa-code",
-        "links": [
-            {"name": "Github", "url": "https://github.com/", "description": "全球最大的代码托管平台"},
-            {"name": "cloudflare", "url": "https://www.cloudflare.com/", "description": "全球领先的CDN和安全服务提供商"},
-            {"name": "腾讯云", "url": "https://cloud.tencent.com/", "description": "腾讯云计算服务平台"},
-            {"name": "阿里云", "url": "https://www.aliyun.com/", "description": "阿里巴巴云计算服务平台"},
-            {"name": "七牛", "url": "https://www.qiniu.com/", "description": "七牛云存储服务"},
-            {"name": "又拍云", "url": "https://www.upyun.com/", "description": "又拍云存储服务"},
-            {"name": "Docker镜像", "url": "https://docker.eyuyun.com/", "description": "Docker镜像代理"}
-        ]
-    }
-];
+// 生成防抖函数（仅定义一次）
+function debounce(func, wait) {
+    let timeout;
+    return function(...args) {
+        const context = this;
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(context, args), wait);
+    };
+}
+
+// 添加HTML转义函数，防止XSS攻击
+function escapeHtml(unsafe) {
+    if (!unsafe) return '';
+    return unsafe.toString()
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
 
 function getHTML() {
+    // 分类、链接名称和链接数据 - 只在HTML生成函数中定义一次，避免冗余
+    const categoriesData = [
+        {
+            "id": "common",
+            "title": "常用网站",
+            "icon": "fas fa-star",
+            "links": [
+                {"name": "GitHub", "url": "https://github.com", "description": "全球最大的代码托管平台"},
+                {"name": "Cloudflare", "url": "https://dash.cloudflare.com", "description": "网络云平台"},
+                {"name": "52论坛", "url": "https://52.pojie.com", "description": "网络技术交流来论坛"},
+                {"name": "哔哩哔哩", "url": "https://bilibili.com", "description": "中国年轻人文化社区"},
+                {"name": "YouTube", "url": "https://youtube.com", "description": "全球最大的视频分享平台"}
+            ]
+        },
+        {
+            "id": "ai",
+            "title": "AI",
+            "icon": "fas fa-robot",
+            "links": [
+                {"name": "Gemini", "url": "https://gemini.google.com/", "description": "Google推出的AI助手"},
+                {"name": "元宝", "url": "https://yuanbao.tencent.com/", "description": "腾讯推出的AI助手"},
+                {"name": "豆包", "url": "https://www.doubao.com/", "description": "字节跳动推出的AI助手"},
+                {"name": "扣子CN", "url": "https://space.coze.cn/", "description": "字节跳动推出的适合企业和团队的复杂工作流"},
+                {"name": "扣子EN", "url": "https://www.coze.com/", "description": "字节跳动推出的适合企业和团队的复杂工作流"},
+                {"name": "ima知识库", "url": "https://ima.qq.com/", "description": "智能知识管理与问答平台"}
+            ]
+        },
+        {
+            "id": "ipo",
+            "title": "IPO与投融资",
+            "icon": "fas fa-chart-line",
+            "links": [
+                {"name": "深交所", "url": "http://listing.szse.cn/projectdynamic/ipo/index.html", "description": "深交所项目动态"},
+                {"name": "上交所", "url": "https://www.sse.com.cn/listing/renewal/ipo/", "description": "上交所项目动态"},
+                {"name": "北交所", "url": "https://www.bse.cn/audit/project_news.html", "description": "北交所项目动态"},
+                {"name": "港交所", "url": "https://sc.hkexnews.hk/TuniS/www.hkexnews.hk/index_c.htm", "description": "香港IPO项目动态-披露易"},
+                {"name": "美国证监会", "url": "https://www.sec.gov/search-filings", "description": "美国证监会IPO审核动态"},
+                {"name": "iposcoop", "url": "https://www.iposcoop.com/ipo-calendar/", "description": "第三方美股IPO动态"},
+                {"name": "产业通", "url": "https://chanyeos.com/smart-ke-b/#/home/homeSearch", "description": "各领域企业、园区信息聚合"},
+                {"name": "36氪创投", "url": "https://pitchhub.36kr.com/", "description": "融资新闻,创业项目,投资人动态,企业资讯,融资快报,项目信息"},
+                {"name": "未来智库", "url": "https://www.vzkoo.com/", "description": "各领域行研报告"},
+                {"name": "中财数据", "url": "https://data.cfi.cn/cfidata.aspx", "description": "二级市场数据"},
+                {"name": "同花顺数据", "url": "https://data.10jqka.com.cn/###", "description": "龙虎榜、业绩预告、资金流向、大宗交易等"}
+            ]
+        },
+        {
+            "id": "legal",
+            "title": "法律",
+            "icon": "fas fa-gavel",
+            "links": [
+                {"name": "证期法规", "url": "http://www.csrc.gov.cn/pub/newsite/flb/flfg/", "description": "证监会法律法规数据库"},
+                {"name": "裁判文书网", "url": "https://wenshu.court.gov.cn/", "description": "中国裁判文书公开平台"},
+                {"name": "执行信息网", "url": "https://zxgk.court.gov.cn/", "description": "全国法院被执行人信息查询"},
+                {"name": "诉讼资产网", "url": "https://www.rmfysszc.gov.cn/", "description": "人民法院诉讼资产网"},
+                {"name": "阿里拍卖", "url": "https://sf.taobao.com/", "description": "司法拍卖平台"},
+                {"name": "openlaw", "url": "https://openlaw.cn/", "description": "法律案例检索平台"}
+            ]
+        },
+        {
+            "id": "certification",
+            "title": "资质认定",
+            "icon": "fas fa-certificate",
+            "links": [
+                {"name": "高新企业", "url": "http://www.innocom.gov.cn/", "description": "高新技术企业认定管理工作网"}
+            ]
+        },
+        {
+            "id": "credit",
+            "title": "公示查询",
+            "icon": "fas fa-credit-card",
+            "links": [
+                {"name": "信用江苏", "url": "https://credit.jiangsu.gov.cn/credit/xyfw/index.jhtml", "description": "江苏省企业信用查询"},
+                {"name": "信用上海", "url": "https://credit.fgw.sh.gov.cn/index.html", "description": "上海市企业信用查询"},
+                {"name": "征信中心", "url": "https://ipcrs.pbccrc.org.cn/", "description": "中国人民银行征信中心"},
+                {"name": "学信网", "url": "https://www.chsi.com.cn/", "description": "中国高等教育学生信息网"},
+                {"name": "合规证明", "url": "https://ydzt.jszwfw.gov.cn/qyxxhcxtweb/#/", "description": "江苏省企业合规证明办理（含线上线下）"},			
+                {"name": "证券失信查询", "url": "http://neris.csrc.gov.cn/shixinchaxun/", "description": "证券期货市场失信记录查询平台"},
+                {"name": "私募基金公示", "url": "https://gs.amac.org.cn/amac-infodisc/res/pof/fund/index.html", "description": "中国证券投资投资基金业协会-私募基金公示"},
+                {"name": "私募管理人", "url": "https://gs.amac.org.cn/amac-infodisc/res/pof/manager/managerList.html", "description": "中国证券投资投资基金业协会-私募基金管理人公示"},
+                {"name": "专利公示", "url": "http://epub.cnipa.gov.cn/", "description": "中国专利公告查询"}
+            ]
+        },
+        {
+            "id": "government",
+            "title": "政务中心",
+            "icon": "fas fa-landmark",
+            "links": [
+                {"name": "苏州政务", "url": "https://sz.jszwfw.gov.cn/", "description": "苏州市政务服务中心"},
+                {"name": "园区政务", "url": "https://szgyy.jszwfw.gov.cn/", "description": "苏州工业园区管委会政务服务中心"},
+                {"name": "园区企服", "url": "https://sme.sipac.gov.cn/epheadline/home", "description": "苏州工业园区企业服务中心"},
+                {"name": "12333", "url": "https://si.12333.gov.cn/index.jhtml", "description": "国家社保服务-养老、失业、工伤保险"},
+                {"name": "江苏医保云", "url": "https://ybj.jszwfw.gov.cn/hsa-local/web/hallEnter/#/Index", "description": "江苏省医疗保障局网上服务大厅"},
+                {"name": "江苏人社", "url": "https://rs.jshrss.jiangsu.gov.cn/index/", "description": "江苏省人社厅网上服务大厅-个人、企业"}
+            ]
+        },
+        {
+            "id": "tech",
+            "title": "IT技术",
+            "icon": "fas fa-code",
+            "links": [
+                {"name": "Github", "url": "https://github.com/", "description": "全球最大的代码托管平台"},
+                {"name": "cloudflare", "url": "https://www.cloudflare.com/", "description": "全球领先的CDN和安全服务提供商"},
+                {"name": "腾讯云", "url": "https://cloud.tencent.com/", "description": "腾讯云计算服务平台"},
+                {"name": "阿里云", "url": "https://www.aliyun.com/", "description": "阿里巴巴云计算服务平台"},
+                {"name": "七牛", "url": "https://www.qiniu.com/", "description": "七牛云存储服务"},
+                {"name": "又拍云", "url": "https://www.upyun.com/", "description": "又拍云存储服务"},
+                {"name": "Docker镜像", "url": "https://docker.eyuyun.com/", "description": "Docker镜像代理"}
+            ]
+        }
+    ];
+
     return `<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -458,9 +479,9 @@ function getHTML() {
             opacity: 1;
         }
         
-        /* 确保分类区域不会隐藏工具提示 */
+        /* 确保分类区域不会隐藏工具提示 - 移除了!important */
         .category-row {
-            overflow: visible !important;
+            overflow: visible;
         }
         
         footer {
@@ -663,6 +684,20 @@ function getHTML() {
     </div>
 
     <script>
+        // HTML转义函数，防止XSS攻击
+        function escapeHtml(unsafe) {
+            if (!unsafe) return '';
+            return unsafe.toString()
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+        
+        // 引入顶层定义的防抖函数
+        window.debounce = ${debounce.toString()};
+        
         // 分类、链接名称和链接数据
         const categoriesData = ${JSON.stringify(categoriesData)};
         
@@ -680,11 +715,13 @@ function getHTML() {
                 
                 const categoryIcon = document.createElement('div');
                 categoryIcon.className = 'category-icon';
-                categoryIcon.innerHTML = '<i class="' + category.icon + '"></i>';
+                // 对动态内容进行HTML转义
+                categoryIcon.innerHTML = '<i class="' + escapeHtml(category.icon) + '"></i>';
                 
                 const categoryTitle = document.createElement('h2');
                 categoryTitle.className = 'category-title';
-                categoryTitle.textContent = category.title;
+                // 对动态内容进行HTML转义
+                categoryTitle.textContent = escapeHtml(category.title);
                 
                 categoryHeader.appendChild(categoryIcon);
                 categoryHeader.appendChild(categoryTitle);
@@ -695,16 +732,19 @@ function getHTML() {
                 category.links.forEach(link => {
                     const linkItem = document.createElement('a');
                     linkItem.className = 'link-item';
-                    linkItem.href = link.url;
+                    // 对动态内容进行HTML转义
+                    linkItem.href = escapeHtml(link.url);
                     linkItem.target = '_blank';
-                    linkItem.rel = 'nofollow';
-                    linkItem.textContent = link.name;
+                    linkItem.rel = 'nofollow noopener noreferrer';
+                    // 对动态内容进行HTML转义
+                    linkItem.textContent = escapeHtml(link.name);
                     
                     // 添加描述工具提示
                     if (link.description) {
                         const tooltip = document.createElement('span');
                         tooltip.className = 'tooltip';
-                        tooltip.textContent = link.description;
+                        // 对动态内容进行HTML转义
+                        tooltip.textContent = escapeHtml(link.description);
                         linkItem.appendChild(tooltip);
                     }
                     
@@ -744,11 +784,7 @@ function getHTML() {
                     tooltip.style.transform = 'translateX(-100%)';
                 }
                 
-                // 检查上方空间
-                if (tooltipRect.top < 10) {
-                    tooltip.style.bottom = 'auto';
-                    tooltip.style.top = '125%';
-                }
+                // 已删除检查上方空间时设置的bottom: auto;和top: 125%;
             });
         }
 
@@ -777,6 +813,8 @@ function getHTML() {
             searchBtn.addEventListener('click', performSearch);
             searchInput.addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') {
+                    // 阻止事件冒泡和默认行为
+                    e.preventDefault();
                     performSearch();
                 }
             });
@@ -822,15 +860,16 @@ function getHTML() {
                 setTimeout(adjustTooltipPositions, 100);
             });
             
-            // 鼠标移动时动态调整Tooltip位置
+            // 使用防抖优化mousemove事件处理，减少函数执行次数
+            const debouncedAdjustTooltip = debounce(adjustTooltipPositions, 50);
             document.addEventListener('mousemove', function(e) {
                 const hoveredLink = document.querySelector('.link-item:hover');
                 if (hoveredLink) {
-                    adjustTooltipPositions();
+                    debouncedAdjustTooltip();
                 }
             });
         });
-    <\/script>
+    </script>
 </body>
 </html>`;
 }
