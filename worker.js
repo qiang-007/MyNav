@@ -42,7 +42,7 @@ function getHTML() {
             "links": [
                 {"name": "GitHub", "url": "https://github.com", "description": "全球最大的代码托管平台"},
                 {"name": "Cloudflare", "url": "https://dash.cloudflare.com", "description": "网络云平台"},
-                {"name": "52论坛", "url": "https://52.pojie.com", "description": "网络技术交流来论坛"},
+                {"name": "52论坛", "url": "https://52pojie.cn", "description": "网络技术交流来论坛"},
                 {"name": "哔哩哔哩", "url": "https://bilibili.com", "description": "中国年轻人文化社区"},
                 {"name": "YouTube", "url": "https://youtube.com", "description": "全球最大的视频分享平台"}
             ]
@@ -659,10 +659,12 @@ function getHTML() {
                 <div class="search-engine-selector">
                     <i class="fas fa-search engine-icon"></i>
                     <select id="engine-select">
-                        <option value="duckduckgo">DuckDuckGo</option>
                         <option value="baidu">百度</option>
+                        <option value="duckduckgo">DuckDuckGo</option>
                         <option value="google">谷歌</option>
                         <option value="bing">Bing</option>
+                        <option value="github">GitHub</option>
+                        <option value="bilibili">B站</option>
                     </select>
                 </div>
                 <input type="text" class="search-input" id="search-input" placeholder="输入关键词搜索...">
@@ -798,7 +800,9 @@ function getHTML() {
                 baidu: 'https://www.baidu.com/s?wd=',
                 google: 'https://www.google.com/search?q=',
                 bing: 'https://www.bing.com/search?q=',
-                duckduckgo: 'https://duckduckgo.com/?q='
+                duckduckgo: 'https://duckduckgo.com/?q=',
+                github: 'https://github.com/search?q=',
+                bilibili: 'https://search.bilibili.com/all?keyword='
             };
             
             function performSearch() {
@@ -819,7 +823,7 @@ function getHTML() {
                 }
             });
             
-            engineSelect.value = 'duckduckgo';
+            engineSelect.value = 'baidu';
             
             // 生成分类和链接
             generateCategoriesHTML();
