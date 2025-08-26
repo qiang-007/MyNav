@@ -152,6 +152,9 @@ function getHTML() {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>简约导航</title>
+	<meta name="keywords" content="EYUYUN,鳄鱼云,易语云,个人常用导航" />
+	<meta name="description" content="我个人常用的网站集合" />
+	<meta name="robots" content="noindex, nofollow, noarchive">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -662,9 +665,9 @@ function getHTML() {
                     <i class="fas fa-search engine-icon"></i>
                     <select id="engine-select">
                         <option value="baidu">百度</option>
-                        <option value="duckduckgo">DuckDuckGo</option>
-                        <option value="google">谷歌</option>
+						<option value="google">谷歌</option>
                         <option value="bing">Bing</option>
+                        <option value="duckduckgo">DuckDuckGo</option>
                         <option value="github">GitHub</option>
                         <option value="bilibili">B站</option>
                     </select>
@@ -679,7 +682,7 @@ function getHTML() {
         </div>
         
         <footer>
-            <p>© 2023 简约导航页 | 专注效率与简洁</p>
+            <p>© 2025 个人导航页 | 专注效率与简洁</p>
         </footer>
     </div>
     
