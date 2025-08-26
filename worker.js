@@ -139,7 +139,9 @@ function getHTML() {
                 {"name": "阿里云", "url": "https://www.aliyun.com/", "description": "阿里巴巴云计算服务平台"},
                 {"name": "七牛", "url": "https://www.qiniu.com/", "description": "七牛云存储服务"},
                 {"name": "又拍云", "url": "https://www.upyun.com/", "description": "又拍云存储服务"},
-                {"name": "Docker镜像", "url": "https://docker.eyuyun.com/", "description": "Docker镜像代理"}
+                {"name": "Docker镜像", "url": "https://docker.eyuyun.com/", "description": "Docker镜像代理"},
+				//{"name": "Github镜像", "url": "https://pxy.eyuyun.com/https://github.com/", "description": "Github镜像代理"},
+				{"name": "Gemini-API", "url": "https://ge.eyuyun.com/", "description": "Gemini-API管理"}
             ]
         }
     ];
